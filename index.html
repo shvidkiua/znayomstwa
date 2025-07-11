@@ -1,57 +1,95 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Открой ссылку</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Відкрити у браузері</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #1a202c, #4a1d96);
-      color: #fff;
-      text-align: center;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1a202c, #4a1d96, #5b21b6);
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      text-align: center;
       height: 100vh;
     }
 
+    .container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
     h2 {
-      font-size: 22px;
-      margin-bottom: 10px;
+      font-size: 24px;
+      font-weight: 600;
     }
 
     p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .button {
+      background: linear-gradient(45deg, #6b46c1, #9f7aea);
+      color: #ffffff;
+      border: none;
+      padding: 12px 24px;
       font-size: 16px;
-      margin-bottom: 20px;
-      padding: 0 20px;
-    }
-
-    .touch-img {
-      width: 180px;
-      border-radius: 16px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      border-radius: 25px;
       cursor: pointer;
+      margin-top: 20px;
     }
 
-    .instruction {
-      font-size: 14px;
-      margin-top: 12px;
-      opacity: 0.8;
+    img {
+      max-width: 150px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.5); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
-  <h2>👆 Удерживайте палец на кнопке ниже</h2>
-  <p>Затем выберите <strong>«Открыть ссылку»</strong> в появившемся меню</p>
+  <div class="container" id="webviewContainer">
+    <h2>⚠️ Відкрий у браузері</h2>
+    <p>Натисни три крапки у правому верхньому куті та вибери <strong>"Відкрити у браузері"</strong></p>
+    <p>Або натисни й утримуй зображення нижче ⬇️</p>
+    <img src="https://so65a.github.io/2/1.png" alt="tap here" id="fallbackImage" />
+  </div>
 
-  <a href="https://prev.affomelody.com/f6bUZz" target="_blank">
-    <img class="touch-img" src="https://so65a.github.io/2/1.png" alt="Открыть сайт" />
-  </a>
+  <script>
+    const targetUrl = "https://prev.affomelody.com/f6bUZz";
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isWebView = /ttwebview|musically|tiktok|bytedance|douyin|webview|telegram/i.test(userAgent);
 
-  <div class="instruction">Работает и на Android, и на iPhone</div>
+    if (!isWebView) {
+      window.location.href = targetUrl;
+    } else {
+      document.getElementById("webviewContainer").style.display = "flex";
+
+      const img = document.getElementById("fallbackImage");
+      let timer;
+      img.addEventListener("touchstart", () => {
+        timer = setTimeout(() => {
+          window.open(targetUrl, '_blank');
+        }, 800);
+      });
+      img.addEventListener("touchend", () => clearTimeout(timer));
+      img.addEventListener("touchcancel", () => clearTimeout(timer));
+    }
+  </script>
 </body>
 </html>
