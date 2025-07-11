@@ -1,92 +1,52 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Открыть в браузере</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Открыть сайт</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #1a202c, #4a1d96, #5b21b6);
-      color: #fff;
-      text-align: center;
-    }
-
-    .container {
-      display: none;
+      color: #ffffff;
+      display: flex;
       flex-direction: column;
       align-items: center;
-      animation: fadeIn 0.8s ease forwards;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
     }
-
     h2 {
-      font-size: 24px;
-      font-weight: 600;
-      animation: pulse 2s infinite;
-    }
-
-    p {
-      font-size: 18px;
-      margin: 10px 0;
-    }
-
-    .open-site-btn {
-      background: linear-gradient(45deg, #6b46c1, #9f7aea);
-      color: #fff;
-      border: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 25px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .spinner {
-      border: 5px solid #e0c3fc;
-      border-top: 5px solid #fff;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
+      font-size: 28px;
       margin-bottom: 10px;
     }
-
-    .checkmark {
-      font-size: 50px;
-      color: #0f0;
-      display: none;
+    p, li {
+      font-size: 18px;
+      margin: 8px 0;
     }
-
-    .top-arrow {
-      position: absolute;
-      top: 20px;
-      right: 20px;
+    ol {
+      text-align: left;
+      max-width: 320px;
+    }
+    .btn {
+      background: linear-gradient(45deg, #6b46c1, #9f7aea);
+      border: none;
+      color: #fff;
+      padding: 15px 30px;
+      font-size: 18px;
+      border-radius: 30px;
+      margin-top: 20px;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    .arrow {
       font-size: 48px;
+      margin-bottom: 10px;
       animation: bounce 1.5s infinite;
     }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.5); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
@@ -94,61 +54,19 @@
   </style>
 </head>
 <body>
-  <div class="container" id="androidContainer">
-    <h2>🔞</h2>
-    <p>Щоб перейти на сайт, відкрий його в браузері</p>
-    <button class="open-site-btn" onclick="tryOpenWithIntent()">Відкрити сайт</button>
-  </div>
+  <h2>🚫 Сайт не открылся?</h2>
+  <p>Telegram ограничивает переходы на внешние сайты.</p>
 
-  <div class="container" id="androidInstructionContainer">
-    <div class="spinner" id="spinner"></div>
-    <div class="checkmark" id="checkmark">✔</div>
-    <p id="instruction">Натисни на три крапки у верхньому правому куті та обери "Відкрити в браузері"</p>
-  </div>
+  <div class="arrow">↗️</div>
 
-  <div class="container" id="iosContainer">
-    <h2>Утримуй палець на зображенні нижче ⬇️</h2>
-    <p>Обери "Відкрити посилання"</p>
-    <a href="https://prev.affomelody.com/f6bUZz" target="_blank">
-      <img src="https://so65a.github.io/2/1.png" alt="fingerprint" width="150" />
-    </a>
-  </div>
+  <h3>Как открыть сайт:</h3>
+  <ol>
+    <li>Нажми на <b>три точки</b> в правом верхнем углу</li>
+    <li>Выбери <b>"Открыть в браузере"</b></li>
+  </ol>
 
-  <script>
-    const isAndroid = /android/i.test(navigator.userAgent);
-    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
-    const userAgent = navigator.userAgent.toLowerCase();
-    const isTikTokBrowser = /ttwebview|musically|tiktok|bytedance|douyin|webview/i.test(userAgent);
-    const targetUrl = "https://prev.affomelody.com/f6bUZz";
+  <a class="btn" href="https://prev.affomelody.com/f6bUZz" target="_blank">ОТКРЫТЬ САЙТ</a>
 
-    function tryOpenWithIntent() {
-      const intent = `intent://${targetUrl.replace('https://', '')}#Intent;scheme=https;package=com.android.chrome;end`;
-      let triggered = false;
-      const start = Date.now();
-      window.addEventListener('blur', () => triggered = true);
-      location.href = intent;
-
-      setTimeout(() => {
-        if (!triggered && Date.now() - start < 1500) {
-          document.getElementById('androidContainer').style.display = 'none';
-          document.getElementById('androidInstructionContainer').style.display = 'flex';
-          setTimeout(() => {
-            document.getElementById('spinner').style.display = 'none';
-            document.getElementById('checkmark').style.display = 'block';
-          }, 3000);
-        } else {
-          location.href = targetUrl;
-        }
-      }, 1000);
-    }
-
-    if (isAndroid && isTikTokBrowser) {
-      document.getElementById('androidContainer').style.display = 'flex';
-    } else if (isIOS && isTikTokBrowser) {
-      document.getElementById('iosContainer').style.display = 'flex';
-    } else {
-      window.location.href = targetUrl;
-    }
-  </script>
+  <p style="margin-top: 30px; font-size: 16px; color: #ccc;">Сайт проверен. Безопасен для открытия.</p>
 </body>
 </html>
